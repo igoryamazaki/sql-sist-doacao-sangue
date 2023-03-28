@@ -1,0 +1,33 @@
+#OBS: para facilitar os teste, inseri apenas os dados principais no procedimento
+
+drop procedure inserirDoacao;
+
+create procedure inserirDoacao(in NomeDoador varchar(150), in DataFezDoacao date, in SexoDoador varchar(15), in FuncionarioID integer, in DoadorID integer)	
+begin
+	declare d integer;
+	declare msg varchar(1000);
+	
+	if exists(select IDFuncionario, E.Nome from Funcionario F, Especialidade E
+	where FuncionarioID = F.IDFuncionario and
+	E.Nome = 'Tecnico')  then
+		if DataFezDoacao < (curdate() – 90) and SexoDoador = 'Masculino' 
+		or DataFezDoacao < (curdate() – 120) and SexoDoador = 'Feminino' then 
+			insert into Doador(Nome,Sexo,IDDoador)
+			values(NomeDoador,SexoDoador,DoadorID);
+
+			
+			insert into Doacao(DataDoacao,IDFuncionario,IDDoador)
+			values(DataFezDoacao,FuncionarioID,DoadorID);
+			set msg = 'Doacao realizada com sucesso!';
+		else
+			set msg = 'Doador impedido de realização doação por não ter completado o prazo mínimo da última doação.';
+		end if;
+	else
+		set msg = 'Funcionário não é um técnico, logo o doador foi impedido de realização da doação.';
+	end if;
+	select msg as msg;
+end //
+
+call inserirDoacao('Thaina Silva','2022-03-12','Feminino',1,90);
+call inserirDoacao('Fernando Pereira','2020-03-12','Masculino',2,92);
+call inserirDoacao('Pedro Augusto','2022-07-09','Masculino',3,93);
