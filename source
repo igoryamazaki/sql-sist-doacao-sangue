@@ -1,0 +1,100 @@
+create database BancoSangue;
+show databases;
+use bancosangue;
+
+
+create table Endereco (
+IDEndereco integer primary key auto_increment,
+CEP char(10),
+Rua char(150),
+Bairro varchar(10),
+Cidade varchar(50),
+UF varchar(2)
+);
+
+create table Especialidade (
+IDEspecialidade integer primary key auto_increment,
+Nome enum('Medico','Enfermeira','Bioquimico','Tecnico'),
+NroRegistro integer
+);
+
+create table Funcionario (
+IDFuncionario integer primary key auto_increment,
+Nome varchar(150),
+DataNascimento date,
+RG char(9),
+CPF char(11),
+IDEndereco integer,
+IDEspecialidade integer,
+foreign key(IDEndereco) references Endereco(IDEndereco) on update restrict on delete restrict,
+foreign key(IDEspecialidade) references Especialidade(IDEspecialidade) on update restrict on delete restrict
+);
+
+create table Doador(
+IDDoador integer primary key auto_increment,
+Nome varchar(150),
+DataNascimento date,
+RG char(9),
+CPF char(11),
+TipoSanguineo enum('A','B','AB','O'),
+FatorRH enum('Positivo','Negativo'),
+NomePai varchar(150),
+NomeMae varchar(150),
+Telefone char(11),
+Celular char(11),
+Sexo enum('Masculino','Feminino'),
+NroEndereco integer,
+IDEndereco integer,
+foreign key(IDEndereco) references Endereco(IDEndereco) on update restrict on delete restrict
+);
+
+
+create table Doacao (
+IDDoacao integer primary key auto_increment,
+DataDoacao date,
+HoraDoacao time,
+IDDoador integer,
+IDFuncionario integer,
+foreign key(IDDoador) references Doador(IDDoador) on update restrict on delete restrict,
+foreign key(IDFuncionario) references Funcionario(IDFuncionario) on update restrict on delete restrict
+);
+
+create table ExameTriagem (
+IDExameTriagem integer primary key auto_increment,
+Nome varchar(150),
+ValorBaseInferior double,
+ValorBaseSuperior double
+);
+
+create table ExameDoacao (
+IDExameDoacao integer primary key auto_increment,
+Nome varchar(150),
+ValorBaseInferior double,
+ValorBaseSuperior double
+);
+
+create table Resultado_Triagem (
+IDResultadoTriagem integer,
+IDExameTriagem integer,
+IDDoacao integer,
+IDFuncionario integer,
+DataAnalise date,
+HoraAnalise time,
+Resultado double,
+DescDiagnostico varchar(450),
+primary key(IDResultadoTriagem,IDDoacao,IDFuncionario),
+foreign key(IDFuncionario) references Funcionario(IDFuncionario) on update restrict on delete restrict
+);
+
+create table Resultado_Doacao (
+IDResultadoDoacao integer,
+IDExameDoacao integer,
+IDDoacao integer,
+IDFuncionario integer,
+DataAnalise date,
+HoraAnalise time,
+Resultado double,
+DescDiagnostico varchar(450),
+primary key(IDResultadoDoacao,IDExameDoacao,IDDoacao),
+foreign key(IDFuncionario) references Funcionario(IDFuncionario) on update restrict on delete restrict
+);
