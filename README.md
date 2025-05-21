@@ -10,5 +10,4 @@ Este repositório contém scripts SQL desenvolvidos como parte de um projeto aca
 ## 📌 Observações
 
 - Este repositório é de uso pessoal para fins acadêmicos.
-- Os scripts podem conter comentários e anotações feitas durante o desenvolvimento.
 - Sinta-se à vontade para explorar e adaptar os materiais conforme necessário.
