@@ -7,12 +7,6 @@ Este repositório contém scripts SQL desenvolvidos como parte de um projeto aca
 - `source/`: Contém os scripts de criação e inserção de dados nas tabelas do banco de dados.
 - `stored-procedure-adc-doacao/`: Inclui procedimentos armazenados para adicionar doações ao sistema.
 
-## 🛠️ Tecnologias Utilizadas
-
-- **Linguagem:** SQL
-- **Sistema de Gerenciamento de Banco de Dados (SGBD):** PostgreSQL
-- **Ferramentas:** pgAdmin, DBeaver ou qualquer outro cliente compatível com PostgreSQL
-
 ## 📌 Observações
 
 - Este repositório é de uso pessoal para fins acadêmicos.
